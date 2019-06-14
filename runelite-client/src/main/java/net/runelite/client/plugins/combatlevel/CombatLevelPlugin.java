@@ -26,10 +26,6 @@
 package net.runelite.client.plugins.combatlevel;
 
 import com.google.inject.Provides;
-import java.text.DecimalFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.Experience;
 import net.runelite.api.GameState;
@@ -46,11 +42,17 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.inject.Inject;
+import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @PluginDescriptor(
-	name = "Combat Level",
-	description = "Show a more accurate combat level in Combat Options panel and other combat level functions",
-	tags = {"wilderness", "attack", "range"}
+        name = "Combat Level",
+        description = "Show a more accurate combat level in Combat Options panel and other combat level functions",
+        tags = {"wilderness", "attack", "range"}
 )
 public class CombatLevelPlugin extends Plugin
 {
@@ -165,7 +167,7 @@ public class CombatLevelPlugin extends Plugin
 	public void onScriptCallbackEvent(ScriptCallbackEvent event)
 	{
 		if (config.wildernessAttackLevelRange()
-			&& "wildernessWidgetTextSet".equals(event.getEventName()))
+                && "wildernessWidgetTextSet".equals(event.getEventName()))
 		{
 			appendAttackLevelRangeText();
 		}
@@ -182,7 +184,7 @@ public class CombatLevelPlugin extends Plugin
 		final String wildernessLevelText = wildernessLevelWidget.getText();
 		final Matcher m = WILDERNESS_LEVEL_PATTERN.matcher(wildernessLevelText);
 		if (!m.matches()
-			|| WorldType.isPvpWorld(client.getWorldType()))
+                || WorldType.isPvpWorld(client.getWorldType()))
 		{
 			return;
 		}
@@ -237,8 +239,12 @@ public class CombatLevelPlugin extends Plugin
 		originalSkullContainerPosition = -1;
 	}
 
-	private static String combatAttackRange(final int combatLevel, final int wildernessLevel)
-	{
-		return Math.max(MIN_COMBAT_LEVEL, combatLevel - wildernessLevel) + "-" + Math.min(Experience.MAX_COMBAT_LEVEL, combatLevel + wildernessLevel);
+    private static String combatAttackRangeString(final int combatLevel, final int wildernessLevel) {
+        final Pair<Integer, Integer> levelRange = combatAttackRange(combatLevel, wildernessLevel);
+        return levelRange.getLeft() + "-" + levelRange.getRight();
+    }
+
+    static Pair<Integer, Integer> combatAttackRange(final int combatLevel, final int wildernessLevel) {
+        return Pair.of(Math.max(MIN_COMBAT_LEVEL, combatLevel - wildernessLevel), Math.min(Experience.MAX_COMBAT_LEVEL, combatLevel + wildernessLevel));
 	}
 }
