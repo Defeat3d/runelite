@@ -27,7 +27,6 @@
 package net.runelite.client.plugins.dailytaskindicators;
 
 import com.google.inject.Provides;
-import javax.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -46,26 +45,28 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
+import javax.inject.Inject;
+
 @PluginDescriptor(
-	name = "Daily Task Indicator",
-	description = "Show chat notifications for daily tasks upon login"
+		name = "Daily Task Indicator",
+		description = "Show chat notifications for daily tasks upon login"
 )
 public class DailyTasksPlugin extends Plugin
 {
 	private static final int ONE_DAY = 86400000;
 
-	private static final String HERB_BOX_MESSAGE = "You have herb boxes waiting to be collected at NMZ.";
-	private static final int HERB_BOX_MAX = 15;
-	private static final int HERB_BOX_COST = 9500;
-	private static final String STAVES_MESSAGE = "You have battlestaves waiting to be collected from Zaff.";
-	private static final String ESSENCE_MESSAGE = "You have essence waiting to be collected from Wizard Cromperty.";
-	private static final String RUNES_MESSAGE = "You have random runes waiting to be collected from Lundail.";
-	private static final String SAND_MESSAGE = "You have sand waiting to be collected from Bert.";
-	private static final int SAND_QUEST_COMPLETE = 160;
-	private static final String FLAX_MESSAGE = "You have bowstrings waiting to be converted from flax from the Flax keeper.";
-	private static final String BONEMEAL_MESSAGE = "You have bonemeal and slime waiting to be collected from Robin.";
-	private static final int BONEMEAL_PER_DIARY = 13;
-	private static final String DYNAMITE_MESSAGE = "You have dynamite waiting to be collected from Thirus.";
+	static final String HERB_BOX_MESSAGE = "You have herb boxes waiting to be collected at NMZ.";
+	static final int HERB_BOX_MAX = 15;
+	static final int HERB_BOX_COST = 9500;
+	static final String STAVES_MESSAGE = "You have battlestaves waiting to be collected from Zaff.";
+	static final String ESSENCE_MESSAGE = "You have essence waiting to be collected from Wizard Cromperty.";
+	static final String RUNES_MESSAGE = "You have random runes waiting to be collected from Lundail.";
+	static final String SAND_MESSAGE = "You have sand waiting to be collected from Bert.";
+	static final int SAND_QUEST_COMPLETE = 160;
+	static final String FLAX_MESSAGE = "You have bowstrings waiting to be converted from flax from the Flax keeper.";
+	static final String BONEMEAL_MESSAGE = "You have bonemeal and slime waiting to be collected from Robin.";
+	static final int BONEMEAL_PER_DIARY = 13;
+	static final String DYNAMITE_MESSAGE = "You have dynamite waiting to be collected from Thirus.";
 
 	@Inject
 	private Client client;
@@ -113,7 +114,7 @@ public class DailyTasksPlugin extends Plugin
 		boolean dailyReset = !loggingIn && currentTime - lastReset > ONE_DAY;
 
 		if ((dailyReset || loggingIn)
-			&& client.getVar(VarClientInt.MEMBERSHIP_STATUS) == 1)
+				&& client.getVar(VarClientInt.MEMBERSHIP_STATUS) == 1)
 		{
 			// Round down to the nearest day
 			lastReset = (long) Math.floor(currentTime / ONE_DAY) * ONE_DAY;
@@ -165,9 +166,9 @@ public class DailyTasksPlugin extends Plugin
 	private void checkHerbBoxes(boolean dailyReset)
 	{
 		if (client.getAccountType() == AccountType.NORMAL
-			&& client.getVar(VarPlayer.NMZ_REWARD_POINTS) >= HERB_BOX_COST
-			&& (client.getVar(Varbits.DAILY_HERB_BOXES_COLLECTED) < HERB_BOX_MAX
-			|| dailyReset))
+				&& client.getVar(VarPlayer.NMZ_REWARD_POINTS) >= HERB_BOX_COST
+				&& (client.getVar(Varbits.DAILY_HERB_BOXES_COLLECTED) < HERB_BOX_MAX
+				|| dailyReset))
 		{
 			sendChatMessage(HERB_BOX_MESSAGE);
 		}
@@ -176,8 +177,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkStaves(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.DIARY_VARROCK_EASY) == 1
-			&& (client.getVar(Varbits.DAILY_STAVES_COLLECTED) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_STAVES_COLLECTED) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(STAVES_MESSAGE);
 		}
@@ -186,8 +187,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkEssence(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.DIARY_ARDOUGNE_MEDIUM) == 1
-			&& (client.getVar(Varbits.DAILY_ESSENCE_COLLECTED) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_ESSENCE_COLLECTED) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(ESSENCE_MESSAGE);
 		}
@@ -196,8 +197,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkRunes(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.DIARY_WILDERNESS_EASY) == 1
-			&& (client.getVar(Varbits.DAILY_RUNES_COLLECTED) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_RUNES_COLLECTED) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(RUNES_MESSAGE);
 		}
@@ -206,8 +207,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkSand(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.QUEST_THE_HAND_IN_THE_SAND) >= SAND_QUEST_COMPLETE
-			&& (client.getVar(Varbits.DAILY_SAND_COLLECTED) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_SAND_COLLECTED) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(SAND_MESSAGE);
 		}
@@ -216,8 +217,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkFlax(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.DIARY_KANDARIN_EASY) == 1
-			&& (client.getVar(Varbits.DAILY_FLAX_STATE) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_FLAX_STATE) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(FLAX_MESSAGE);
 		}
@@ -247,8 +248,8 @@ public class DailyTasksPlugin extends Plugin
 	private void checkDynamite(boolean dailyReset)
 	{
 		if (client.getVar(Varbits.DIARY_KOUREND_MEDIUM) == 1
-			&& (client.getVar(Varbits.DAILY_DYNAMITE_COLLECTED) == 0
-			|| dailyReset))
+				&& (client.getVar(Varbits.DAILY_DYNAMITE_COLLECTED) == 0
+				|| dailyReset))
 		{
 			sendChatMessage(DYNAMITE_MESSAGE);
 		}
@@ -257,14 +258,14 @@ public class DailyTasksPlugin extends Plugin
 	private void sendChatMessage(String chatMessage)
 	{
 		final String message = new ChatMessageBuilder()
-			.append(ChatColorType.HIGHLIGHT)
-			.append(chatMessage)
-			.build();
+				.append(ChatColorType.HIGHLIGHT)
+				.append(chatMessage)
+				.build();
 
 		chatMessageManager.queue(
-			QueuedMessage.builder()
-				.type(ChatMessageType.CONSOLE)
-				.runeLiteFormattedMessage(message)
-				.build());
+				QueuedMessage.builder()
+						.type(ChatMessageType.CONSOLE)
+						.runeLiteFormattedMessage(message)
+						.build());
 	}
 }
