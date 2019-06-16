@@ -34,7 +34,7 @@ public class CombatLevelPluginTest
 {
 
 	private static final int MIN_COMBAT_LEVEL = 3;
-	private static final int MAX_COMBAT_LEVEL = 126;
+	private static final int MAX_COMBAT_LEVEL = 124;
 
 	@Test
 	public void testNewPlayer()
