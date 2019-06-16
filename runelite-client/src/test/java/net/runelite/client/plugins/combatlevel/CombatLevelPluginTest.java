@@ -401,7 +401,8 @@ public class CombatLevelPluginTest
 	}
 
 	@Test
-	public void testWildernessCombatAttackRange() {
+	public void testWildernessCombatAttackRange()
+	{
 		final int wildernessLevel = 20;
 		final int combatLevel = 50;
 		final Pair<Integer, Integer> range = CombatLevelPlugin.combatAttackRange(combatLevel, wildernessLevel);
@@ -410,7 +411,8 @@ public class CombatLevelPluginTest
 	}
 
 	@Test
-	public void testWildernessCombatAttackRange_MinLevel() {
+	public void testWildernessCombatAttackRange_MinLevel()
+	{
 		final int wildernessLevel = 20;
 		final int combatLevel = 5;
 		final Pair<Integer, Integer> range = CombatLevelPlugin.combatAttackRange(combatLevel, wildernessLevel);
@@ -418,7 +420,8 @@ public class CombatLevelPluginTest
 	}
 
 	@Test
-	public void testWildnessCombatAttackRange_MaxLevel() {
+	public void testWildnessCombatAttackRange_MaxLevel()
+	{
 		final int wildernessLevel = 20;
 		final int combatLevel = 120;
 		final Pair<Integer, Integer> range = CombatLevelPlugin.combatAttackRange(combatLevel, wildernessLevel);
