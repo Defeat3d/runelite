@@ -395,6 +395,7 @@ public class DailyTasksPluginTest {
         plugin.onGameTick(new GameTick());
         verifyMessage(message);
     }
+
     @Test
     public void testBoneMeal_DiaryIncomplete() {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
