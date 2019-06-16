@@ -4,11 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.testing.fieldbinder.Bind;
 import com.google.inject.testing.fieldbinder.BoundFieldModule;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.VarClientInt;
-import net.runelite.api.VarPlayer;
-import net.runelite.api.Varbits;
+import net.runelite.api.*;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.vars.AccountType;
 import net.runelite.client.chat.ChatColorType;
@@ -24,7 +20,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DailyTasksPluginTest {
+public class DailyTasksPluginTest
+{
 
     @Mock
     @Bind
@@ -42,7 +39,8 @@ public class DailyTasksPluginTest {
     private DailyTasksPlugin plugin;
 
     @Before
-    public void before() {
+    public void before()
+    {
         Guice.createInjector(BoundFieldModule.of(this)).injectMembers(this);
 
         when(config.showHerbBoxes()).thenReturn(true);
@@ -56,7 +54,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testNoMembership() {
+    public void testNoMembership()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(0);
 
         // All of the daily tasks meet their conditions
@@ -92,7 +91,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testHerbBoxes() {
+    public void testHerbBoxes()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getAccountType()).thenReturn(AccountType.NORMAL);
         when(client.getVar(VarPlayer.NMZ_REWARD_POINTS)).thenReturn(DailyTasksPlugin.HERB_BOX_COST);
@@ -107,7 +107,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testHerbBoxes_IronMan() {
+    public void testHerbBoxes_IronMan()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getAccountType()).thenReturn(AccountType.IRONMAN);
         when(client.getVar(VarPlayer.NMZ_REWARD_POINTS)).thenReturn(DailyTasksPlugin.HERB_BOX_COST);
@@ -118,7 +119,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testHerbBoxes_NoFunds() {
+    public void testHerbBoxes_NoFunds()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getAccountType()).thenReturn(AccountType.NORMAL);
         when(client.getVar(VarPlayer.NMZ_REWARD_POINTS)).thenReturn(0);
@@ -129,7 +131,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testHerbBoxes_LimitReached() {
+    public void testHerbBoxes_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getAccountType()).thenReturn(AccountType.NORMAL);
         when(client.getVar(VarPlayer.NMZ_REWARD_POINTS)).thenReturn(DailyTasksPlugin.HERB_BOX_COST);
@@ -149,7 +152,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testStaves() {
+    public void testStaves()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_VARROCK_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_STAVES_COLLECTED)).thenReturn(0);
@@ -163,7 +167,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testStaves_DiaryIncomplete() {
+    public void testStaves_DiaryIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_VARROCK_EASY)).thenReturn(0);
         when(client.getVar(Varbits.DAILY_STAVES_COLLECTED)).thenReturn(0);
@@ -173,7 +178,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testStaves_LimitReached() {
+    public void testStaves_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_VARROCK_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_STAVES_COLLECTED)).thenReturn(10);
@@ -192,7 +198,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testEssence() {
+    public void testEssence()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_ARDOUGNE_MEDIUM)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_ESSENCE_COLLECTED)).thenReturn(0);
@@ -206,7 +213,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testEssence_DiaryIncomplete() {
+    public void testEssence_DiaryIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_ARDOUGNE_MEDIUM)).thenReturn(0);
         when(client.getVar(Varbits.DAILY_ESSENCE_COLLECTED)).thenReturn(0);
@@ -216,7 +224,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testEssence_LimitReached() {
+    public void testEssence_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_ARDOUGNE_MEDIUM)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_ESSENCE_COLLECTED)).thenReturn(10);
@@ -235,7 +244,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testRunes() {
+    public void testRunes()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_RUNES_COLLECTED)).thenReturn(0);
@@ -249,7 +259,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testRunes_DiaryIncomplete() {
+    public void testRunes_DiaryIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(0);
         when(client.getVar(Varbits.DAILY_RUNES_COLLECTED)).thenReturn(0);
@@ -259,7 +270,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testRunes_LimitReached() {
+    public void testRunes_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_RUNES_COLLECTED)).thenReturn(10);
@@ -278,7 +290,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testSand() {
+    public void testSand()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.QUEST_THE_HAND_IN_THE_SAND)).thenReturn(DailyTasksPlugin.SAND_QUEST_COMPLETE);
         when(client.getVar(Varbits.DAILY_SAND_COLLECTED)).thenReturn(0);
@@ -292,7 +305,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testSand_QuestIncomplete() {
+    public void testSand_QuestIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.QUEST_THE_HAND_IN_THE_SAND)).thenReturn(0);
         when(client.getVar(Varbits.DAILY_SAND_COLLECTED)).thenReturn(0);
@@ -302,7 +316,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testSand_LimitReached() {
+    public void testSand_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.QUEST_THE_HAND_IN_THE_SAND)).thenReturn(DailyTasksPlugin.SAND_QUEST_COMPLETE);
         when(client.getVar(Varbits.DAILY_SAND_COLLECTED)).thenReturn(10);
@@ -321,7 +336,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testFlax() {
+    public void testFlax()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_KANDARIN_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_FLAX_STATE)).thenReturn(0);
@@ -335,7 +351,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testFlax_DiaryIncomplete() {
+    public void testFlax_DiaryIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_KANDARIN_EASY)).thenReturn(0);
         when(client.getVar(Varbits.DAILY_FLAX_STATE)).thenReturn(0);
@@ -345,7 +362,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testFlax_LimitReached() {
+    public void testFlax_LimitReached()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DIARY_KANDARIN_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_FLAX_STATE)).thenReturn(10);
@@ -367,7 +385,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testBonemeal() {
+    public void testBonemeal()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_BONEMEAL_STATE)).thenReturn(0);
 
@@ -397,7 +416,8 @@ public class DailyTasksPluginTest {
     }
 
     @Test
-    public void testBoneMeal_DiaryIncomplete() {
+    public void testBoneMeal_DiaryIncomplete()
+    {
         when(client.getVar(VarClientInt.MEMBERSHIP_STATUS)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_BONEMEAL_STATE)).thenReturn(0);
         when(client.getVar(Varbits.DIARY_MORYTANIA_MEDIUM)).thenReturn(0);
@@ -408,7 +428,8 @@ public class DailyTasksPluginTest {
         verifyNoMoreInteractions(chatMessageManager);
     }
 
-    private void verifyMessage(String message) {
+    private void verifyMessage(String message)
+    {
         verify(chatMessageManager).queue(QueuedMessage.builder()
                 .type(ChatMessageType.CONSOLE)
                 .runeLiteFormattedMessage(message)
