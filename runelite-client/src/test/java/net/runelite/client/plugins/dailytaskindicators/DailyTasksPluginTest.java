@@ -74,7 +74,7 @@ public class DailyTasksPluginTest {
         when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_RUNES_COLLECTED)).thenReturn(0);
 
-        when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(0);
+        when(client.getVar(Varbits.DIARY_WILDERNESS_EASY)).thenReturn(1);
         when(client.getVar(Varbits.DAILY_RUNES_COLLECTED)).thenReturn(0);
 
         when(client.getVar(Varbits.QUEST_THE_HAND_IN_THE_SAND)).thenReturn(DailyTasksPlugin.SAND_QUEST_COMPLETE);

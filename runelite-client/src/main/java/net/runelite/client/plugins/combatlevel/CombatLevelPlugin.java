@@ -202,7 +202,7 @@ public class CombatLevelPlugin extends Plugin
 		final int wildernessLevel = Integer.parseInt(m.group(1));
 		final int combatLevel = client.getLocalPlayer().getCombatLevel();
 
-		wildernessLevelWidget.setText(wildernessLevelText + "<br>" + combatAttackRange(combatLevel, wildernessLevel));
+		wildernessLevelWidget.setText(wildernessLevelText + "<br>" + combatAttackRangeString(combatLevel, wildernessLevel));
 		wildernessLevelWidget.setOriginalY(WILDERNESS_LEVEL_TEXT_ADJUSTED_ORIGINAL_Y);
 		skullContainer.setOriginalY(SKULL_CONTAINER_ADJUSTED_ORIGINAL_Y);
 
