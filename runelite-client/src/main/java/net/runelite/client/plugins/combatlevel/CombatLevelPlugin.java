@@ -26,11 +26,7 @@
 package net.runelite.client.plugins.combatlevel;
 
 import com.google.inject.Provides;
-import net.runelite.api.Client;
-import net.runelite.api.Experience;
-import net.runelite.api.GameState;
-import net.runelite.api.Skill;
-import net.runelite.api.WorldType;
+import net.runelite.api.*;
 import net.runelite.api.events.ConfigChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ScriptCallbackEvent;
@@ -239,12 +235,14 @@ public class CombatLevelPlugin extends Plugin
 		originalSkullContainerPosition = -1;
 	}
 
-    private static String combatAttackRangeString(final int combatLevel, final int wildernessLevel) {
+    private static String combatAttackRangeString(final int combatLevel, final int wildernessLevel)
+	{
         final Pair<Integer, Integer> levelRange = combatAttackRange(combatLevel, wildernessLevel);
         return levelRange.getLeft() + "-" + levelRange.getRight();
     }
 
-    static Pair<Integer, Integer> combatAttackRange(final int combatLevel, final int wildernessLevel) {
+    static Pair<Integer, Integer> combatAttackRange(final int combatLevel, final int wildernessLevel)
+	{
         return Pair.of(Math.max(MIN_COMBAT_LEVEL, combatLevel - wildernessLevel), Math.min(Experience.MAX_COMBAT_LEVEL, combatLevel + wildernessLevel));
 	}
 }
