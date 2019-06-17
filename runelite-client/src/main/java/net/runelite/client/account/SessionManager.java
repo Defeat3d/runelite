@@ -25,28 +25,26 @@
 package net.runelite.client.account;
 
 import com.google.gson.Gson;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.time.Instant;
-import java.util.UUID;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.client.events.SessionClose;
-import net.runelite.client.events.SessionOpen;
 import net.runelite.client.RuneLite;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.SessionClose;
+import net.runelite.client.events.SessionOpen;
 import net.runelite.client.util.LinkBrowser;
 import net.runelite.client.ws.WSClient;
 import net.runelite.http.api.account.AccountClient;
 import net.runelite.http.api.account.OAuthResponse;
 import net.runelite.http.api.ws.messages.LoginResponse;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.*;
+import java.nio.file.Files;
+import java.time.Instant;
+import java.util.UUID;
 
 @Singleton
 @Slf4j
@@ -122,9 +120,9 @@ public class SessionManager
 		}
 	}
 
-	private void deleteSession()
+	private void deleteSession() throws IOException
 	{
-		SESSION_FILE.delete();
+		Files.delete(SESSION_FILE.toPath());
 	}
 
 	/**
@@ -226,7 +224,14 @@ public class SessionManager
 
 	public void logout()
 	{
-		closeSession();
-		deleteSession();
+	    closeSession();
+		try
+		{
+			deleteSession();
+		}
+		catch (IOException ex)
+        {
+			log.error("Failed to delete session", ex);
+		}
 	}
 }
