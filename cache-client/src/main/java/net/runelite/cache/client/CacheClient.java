@@ -64,7 +64,7 @@ public class CacheClient implements AutoCloseable
 {
 	private static final Logger logger = LoggerFactory.getLogger(CacheClient.class);
 
-	private static final String HOST = "oldschool1.runescape.com";
+	private static final String HOST_URL = "oldschool1.runescape.com";
 	private static final int PORT = 43594;
 
 	private static final int MAX_REQUESTS = 19; // too many and the server closes the conncetion
@@ -84,7 +84,7 @@ public class CacheClient implements AutoCloseable
 
 	public CacheClient(Store store, int clientRevision)
 	{
-		this(store, HOST, clientRevision);
+		this(store, HOST_URL, clientRevision);
 	}
 
 	public CacheClient(Store store, String host, int clientRevision)

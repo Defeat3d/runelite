@@ -26,6 +26,7 @@ package net.runelite.api;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * An enumeration of possible world types.
@@ -80,7 +81,7 @@ public enum WorldType
 		this.mask = mask;
 	}
 
-	private static final EnumSet<WorldType> PVP_WORLD_TYPES = EnumSet.of(
+	private static final Set<WorldType> PVP_WORLD_TYPES = EnumSet.of(
 		DEADMAN,
 		DEADMAN_TOURNAMENT,
 		PVP,
@@ -93,7 +94,7 @@ public enum WorldType
 	 * @param mask the mask
 	 * @return the enum set
 	 */
-	public static EnumSet<WorldType> fromMask(final int mask)
+	public static Set<WorldType> fromMask(final int mask)
 	{
 		final EnumSet<WorldType> types = EnumSet.noneOf(WorldType.class);
 
