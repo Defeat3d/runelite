@@ -367,6 +367,7 @@ public class CacheClient implements AutoCloseable
 				catch (InterruptedException ex)
 				{
 					logger.warn(null, ex);
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -395,6 +396,7 @@ public class CacheClient implements AutoCloseable
 				catch (InterruptedException ex)
 				{
 					logger.warn("interrupted while waiting for requests", ex);
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -448,7 +450,7 @@ public class CacheClient implements AutoCloseable
 
 		requests.remove(pr);
 
-		notify();
+		notifyAll();
 
 		FileResult result = new FileResult(index, file, compressedData);
 
