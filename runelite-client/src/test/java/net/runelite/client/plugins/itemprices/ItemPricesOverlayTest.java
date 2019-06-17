@@ -356,7 +356,7 @@ public class ItemPricesOverlayTest {
         when(config.showEA()).thenReturn(true);
         when(config.showAlchProfit()).thenReturn(false);
         overlay.render(null);
-        verify(toolTipManager).add(getToolTip("EX: 4.29B gp (2.14B gp ea)"));
+        verify(toolTipManager).add(getToolTip("EX: 4.29B gp (2.14B ea)"));
     }
 
     // Private supportive methods

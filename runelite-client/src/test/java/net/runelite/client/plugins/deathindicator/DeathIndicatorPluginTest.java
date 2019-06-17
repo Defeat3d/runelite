@@ -33,7 +33,7 @@ public class DeathIndicatorPluginTest {
 
     @Mock
     @Bind
-    private Client client;
+    public Client client;
 
     @Mock
     @Bind
@@ -146,6 +146,8 @@ public class DeathIndicatorPluginTest {
         event.setGameState(GameState.LOGGED_IN);
         plugin.onGameStateChanged(event);
 
+        verify(config).deathLocationX(getDeathLocation().getX());
+        verify(config).deathLocationY(getDeathLocation().getY());
         verify(client).setHintArrow(getDeathLocation());
     }
 
