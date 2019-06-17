@@ -30,33 +30,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.google.inject.Provides;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.swing.SwingUtilities;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
-import net.runelite.api.ItemComposition;
-import net.runelite.api.ItemContainer;
-import net.runelite.api.NPC;
-import net.runelite.api.Player;
-import net.runelite.api.SpriteID;
+import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.ConfigChanged;
@@ -85,6 +62,18 @@ import net.runelite.http.api.loottracker.GameItem;
 import net.runelite.http.api.loottracker.LootRecord;
 import net.runelite.http.api.loottracker.LootRecordType;
 import net.runelite.http.api.loottracker.LootTrackerClient;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.inject.Inject;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @PluginDescriptor(
 	name = "Loot Tracker",
@@ -411,27 +400,7 @@ public class LootTrackerPlugin extends Plugin
 		if (m.find())
 		{
 			final String type = m.group(1).toLowerCase();
-			switch (type)
-			{
-				case "beginner":
-					eventType = "Clue Scroll (Beginner)";
-					break;
-				case "easy":
-					eventType = "Clue Scroll (Easy)";
-					break;
-				case "medium":
-					eventType = "Clue Scroll (Medium)";
-					break;
-				case "hard":
-					eventType = "Clue Scroll (Hard)";
-					break;
-				case "elite":
-					eventType = "Clue Scroll (Elite)";
-					break;
-				case "master":
-					eventType = "Clue Scroll (Master)";
-					break;
-			}
+			eventType = "Clue Scroll (" + StringUtils.capitalize(type) + ")";
 		}
 	}
 
